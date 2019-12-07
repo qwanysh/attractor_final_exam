@@ -1,5 +1,6 @@
 import json
 
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from django.views.generic import View
@@ -7,7 +8,7 @@ from django.views.generic import View
 from ..models import Bookshelf, Book
 
 
-class BookshelfView(View):
+class BookshelfView(LoginRequiredMixin, View):
     def post(self, request, *args, **kwargs):
         data = json.loads(self.request.body.decode())
         book = get_object_or_404(Book, pk=data.get('book_pk'))
