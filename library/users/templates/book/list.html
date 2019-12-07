@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block heading %}Books{% endblock %}
+{% block content %}
+<div class="list-group">
+    {% for object in object_list %}
+    <a href="{% url 'books:book_detail' object.pk %}" class="list-group-item list-group-item-action">{{ object.name }} ({{ object.year_of_publish }})</a>
+    {% empty %}
+    <a href="#" class="list-group-item list-group-item-action disabled" tabindex="-1" aria-disabled="true">No book here</a>
+    {% endfor %}
+</div>
+{% endblock %}

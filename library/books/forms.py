@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Author
+from .models import Author, Book
 
 
 class AuthorCreateForm(forms.ModelForm):
@@ -37,3 +37,38 @@ class AuthorCreateForm(forms.ModelForm):
     class Meta:
         model = Author
         exclude = []
+
+
+class BookCreateForm(forms.ModelForm):
+    name = forms.CharField(
+        widget=forms.TextInput(attrs={
+            'class': 'form-control'
+        })
+    )
+    year_of_publish = forms.CharField(
+        widget=forms.TextInput(attrs={
+            'class': 'form-control'
+        })
+    )
+    file = forms.FileField(
+        required=False,
+        widget=forms.FileInput(attrs={
+            'class': 'form-control'
+        })
+    )
+    coverage = forms.ImageField(
+        required=False,
+        widget=forms.FileInput(attrs={
+            'class': 'form-control'
+        })
+    )
+    description = forms.CharField(
+        required=False,
+        widget=forms.Textarea(attrs={
+            'class': 'form-control'
+        })
+    )
+
+    class Meta:
+        model = Book
+        exclude = ['author']

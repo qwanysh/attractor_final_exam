@@ -2,6 +2,7 @@
 {% block heading %}Author details{% endblock %}
 {% block controls %}
 <a href="{% url 'books:author_delete' object.pk %}" class="btn btn-danger">Delete</a>
+<a href="{% url 'books:book_create' object.pk %}" class="btn btn-dark">Add book</a>
 {% endblock %}
 {% block content %}
 <div class="jumbotron jumbotron-fluid">
