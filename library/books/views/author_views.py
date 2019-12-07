@@ -1,10 +1,10 @@
 from django.contrib import messages
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.urls import reverse
-from django.views.generic import ListView, DetailView, CreateView, DeleteView
+from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView
 
 from ..models import Author
-from ..forms import AuthorCreateForm
+from ..forms import AuthorForm
 
 
 class AuthorListView(ListView):
@@ -31,11 +31,11 @@ class AuthorDetailView(DetailView):
 class AuthorCreateView(UserPassesTestMixin, CreateView):
     model = Author
     template_name = 'author/create.html'
-    form_class = AuthorCreateForm
+    form_class = AuthorForm
 
     def get_success_url(self):
         messages.add_message(self.request, messages.SUCCESS, 'Author has been added')
-        return reverse('books:author_list')
+        return reverse('books:author_detail', kwargs={'pk': self.kwargs.get('pk')})
 
     def test_func(self):
         return self.request.user.is_superuser
@@ -48,6 +48,19 @@ class AuthorDeleteView(UserPassesTestMixin, DeleteView):
     def get_success_url(self):
         messages.add_message(self.request, messages.SUCCESS, 'Author has been deleted')
         return reverse('books:author_list')
+
+    def test_func(self):
+        return self.request.user.is_superuser
+
+
+class AuthorEditView(UserPassesTestMixin, UpdateView):
+    model = Author
+    template_name = 'author/edit.html'
+    form_class = AuthorForm
+
+    def get_success_url(self):
+        messages.add_message(self.request, messages.SUCCESS, 'Author has been edited')
+        return reverse('books:author_detail', kwargs={'pk': self.kwargs.get('pk')})
 
     def test_func(self):
         return self.request.user.is_superuser

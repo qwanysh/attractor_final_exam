@@ -3,7 +3,7 @@ from django import forms
 from .models import Author, Book, Review
 
 
-class AuthorCreateForm(forms.ModelForm):
+class AuthorForm(forms.ModelForm):
     full_name = forms.CharField(
         widget=forms.TextInput(attrs={
             'class': 'form-control'

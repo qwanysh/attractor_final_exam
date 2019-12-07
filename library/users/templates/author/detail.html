@@ -3,6 +3,7 @@
 {% block controls %}
 {% if user.is_superuser %}
 <a href="{% url 'books:author_delete' object.pk %}" class="btn btn-danger">Delete</a>
+<a href="{% url 'books:author_edit' object.pk %}" class="btn btn-warning">Edit</a>
 <a href="{% url 'books:book_create' object.pk %}" class="btn btn-dark">Add book</a>
 {% endif %}
 {% endblock %}
