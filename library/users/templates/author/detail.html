@@ -1,14 +1,18 @@
 {% extends 'base.html' %}
 {% block heading %}Author details{% endblock %}
 {% block controls %}
+{% if user.is_superuser %}
 <a href="{% url 'books:author_delete' object.pk %}" class="btn btn-danger">Delete</a>
 <a href="{% url 'books:book_create' object.pk %}" class="btn btn-dark">Add book</a>
+{% endif %}
 {% endblock %}
 {% block content %}
 <div class="jumbotron jumbotron-fluid">
     <div class="container">
         <h1 class="display-4">{{ object.full_name }}</h1>
-        <!--    <p class="lead">{{ object.name }}</p>-->
+        <p class="lead">Date of birth: {{ object.date_of_birth }}</p>
+        <p class="lead">Date of death: {{ object.date_of_birth }}</p>
+        <p class="lead">Biography: {{ object.biography }}</p>
     </div>
 </div>
 <h2 class="mb-4">Books of this author</h2>

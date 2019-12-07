@@ -1,21 +1,26 @@
 {% extends 'base.html' %}
 {% block heading %}Book details{% endblock %}
 {% block controls %}
+{% if user.is_superuser %}
 <a href="{% url 'books:book_delete' object.pk %}" class="btn btn-danger">Delete</a>
+{% endif %}
 {% endblock %}
 {% block content %}
 <div class="jumbotron jumbotron-fluid">
   <div class="container">
-    <h1 class="display-4">{{ object.name }}</h1>
-    <!--    <p class="lead">{{ object.name }}</p>-->
+    <h1 class="display-4">{{ object.name }} ({{ object.year_of_publish }})</h1>
+        <p class="lead">Author: <a href="{% url 'books:author_detail' object.author.pk %}">{{ object.author.full_name }}</a></p>
+        <p class="lead">Description: {{ object.description }}</p>
   </div>
 </div>
 <h2 class="mb-4">Reviews</h2>
+{% if user.is_authenticated %}
 <form action="{% url 'books:review_create' object.pk %}" method="POST" enctype="multipart/form-data">
   {% csrf_token %}
   {% include 'partials/_form.html' %}
   <button type="submit" class="btn btn-dark mb-3">Submit</button>
 </form>
+{% endif %}
 {% for review in reviews %}
 <ul class="list-unstyled">
   <li class="media">
@@ -23,7 +28,9 @@
       <h5 class="mt-0 mb-1">[<code>{{ review.created_at | date:'H:i d.m.Y' }}</code>]&nbsp;<a href="{% url 'users:detail' review.user.pk %}">{{ review.user.username }}</a></h5>
       {{ review.text }}
       <br>
+      {% if review.user == user %}
       <a href="{% url 'books:review_delete' object.pk review.pk %}" class="btn btn-danger">Delete</a>
+      {% endif %}
     </div>
   </li>
 </ul>

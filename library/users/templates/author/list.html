@@ -1,7 +1,9 @@
 {% extends 'base.html' %}
 {% block heading %}Authors{% endblock %}
 {% block controls %}
+{% if user.is_superuser %}
 <a href="{% url 'books:author_create' %}" class="btn btn-dark">Add author</a>
+{% endif %}
 {% endblock %}
 {% block content %}
 <div class="list-group">
