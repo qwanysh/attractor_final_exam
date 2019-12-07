@@ -117,6 +117,15 @@ class Review(models.Model):
         default=None,
         verbose_name='User'
     )
+    book = models.ForeignKey(
+        'books.Book',
+        on_delete=models.CASCADE,
+        related_name='reviews',
+        null=False,
+        blank=False,
+        default=None,
+        verbose_name='Book'
+    )
     text = models.TextField(
         max_length=500,
         null=False,
