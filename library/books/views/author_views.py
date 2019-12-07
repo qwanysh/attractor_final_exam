@@ -1,4 +1,4 @@
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, CreateView
 
 from ..models import Author
 from ..forms import AuthorCreateForm
@@ -16,3 +16,9 @@ class AuthorListView(ListView):
 class AuthorDetailView(DetailView):
     model = Author
     template_name = 'author/detail.html'
+
+
+class AuthorCreateView(CreateView):
+    model = Author
+    template_name = 'author/create.html'
+    form_class = AuthorCreateForm

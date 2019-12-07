@@ -1,1 +1,1 @@
-from .author_views import AuthorListView, AuthorDetailView
+from .author_views import AuthorListView, AuthorDetailView, AuthorCreateView
