@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.contrib.auth.mixins import UserPassesTestMixin
 from django.urls import reverse
 from django.views.generic import ListView, DetailView, CreateView, DeleteView
 
@@ -27,7 +28,7 @@ class AuthorDetailView(DetailView):
         return books
 
 
-class AuthorCreateView(CreateView):
+class AuthorCreateView(UserPassesTestMixin, CreateView):
     model = Author
     template_name = 'author/create.html'
     form_class = AuthorCreateForm
@@ -36,11 +37,17 @@ class AuthorCreateView(CreateView):
         messages.add_message(self.request, messages.SUCCESS, 'Author has been added')
         return reverse('books:author_list')
 
+    def test_func(self):
+        return self.request.user.is_superuser
 
-class AuthorDeleteView(DeleteView):
+
+class AuthorDeleteView(UserPassesTestMixin, DeleteView):
     model = Author
     template_name = 'author/delete.html'
 
     def get_success_url(self):
         messages.add_message(self.request, messages.SUCCESS, 'Author has been deleted')
         return reverse('books:author_list')
+
+    def test_func(self):
+        return self.request.user.is_superuser
