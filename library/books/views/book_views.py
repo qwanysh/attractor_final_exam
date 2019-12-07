@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.contrib.auth.mixins import UserPassesTestMixin
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
 from django.views.generic import ListView, DetailView, CreateView, DeleteView
@@ -33,7 +34,7 @@ class BookDetailView(DetailView):
         return super().get_context_data(**kwargs)
 
 
-class BookCreateView(CreateView):
+class BookCreateView(UserPassesTestMixin, CreateView):
     model = Book
     template_name = 'book/create.html'
     form_class = BookCreateForm
@@ -50,11 +51,17 @@ class BookCreateView(CreateView):
         messages.add_message(self.request, messages.SUCCESS, 'Book has been added')
         return reverse('books:book_list')
 
+    def test_func(self):
+        return self.request.user.is_superuser
 
-class BookDeleteView(DeleteView):
+
+class BookDeleteView(UserPassesTestMixin, DeleteView):
     model = Book
     template_name = 'book/delete.html'
 
     def get_success_url(self):
         messages.add_message(self.request, messages.SUCCESS, 'Book has been deleted')
         return reverse('books:book_list')
+
+    def test_func(self):
+        return self.request.user.is_superuser
