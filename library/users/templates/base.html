@@ -12,6 +12,7 @@
 <body>
 {% include 'partials/_navbar.html' %}
 <div class="container">
+    {% include 'partials/_messages.html' %}
     <h1 class="pt-3 pb-3">{% block heading %}Library{% endblock %}</h1>
     <div class="btn-group mb-3" role="group" aria-label="Basic example">
         {% block controls %}{% endblock %}

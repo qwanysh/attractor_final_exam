@@ -9,10 +9,10 @@
 <h2 class="mb-4">Added books</h2>
 <ul class="list-unstyled">
     {% for bookshelf in object.bookshelfs.all %}
-    <li class="media">
+    <li class="media mb-2">
         <!--        <img src="..." class="mr-3" alt="...">-->
         <div class="media-body">
-            <h5 class="mt-0 mb-1"><a href="{% url 'books:book_detail' bookshelf.book.pk %}">{{ bookshelf.book.name }}</a></h5>
+            <h5 class="mt-0 mb-1"><a href="{% url 'books:book_detail' bookshelf.book.pk %}">{{ bookshelf.book.name }} ({{ bookshelf.book.year_of_publish }})</a></h5>
             <div class="bookshelf-controls" id="bookshelf_controls-{{ bookshelf.book.pk }}">
                 {% if user.is_authenticated %}
                 {% if bookshelf in user.bookshelfs.all %}

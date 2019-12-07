@@ -1,11 +1,30 @@
 {% extends 'base.html' %}
 {% block heading %}Books{% endblock %}
 {% block content %}
-<div class="list-group">
+<ul class="list-unstyled">
     {% for object in object_list %}
-    <a href="{% url 'books:book_detail' object.pk %}" class="list-group-item list-group-item-action">{{ object.name }} ({{ object.year_of_publish }})</a>
+    <li class="media mb-2">
+        <!--        <img src="..." class="mr-3" alt="...">-->
+        <div class="media-body">
+            <h5 class="mt-0 mb-1"><a href="{% url 'books:book_detail' object.pk %}">{{ object.name }} ({{ object.year_of_publish }})</a></h5>
+            <div class="bookshelf-controls" id="bookshelf_controls-{{ object.pk }}">
+                {% if user.is_authenticated %}
+                {% if object in user_added_books %}
+                <a href="#" class="btn btn-danger bookshelf_btn" data-book="{{ object.pk }}">Remove from bookshelf</a>
+                {% else %}
+                <a href="#" class="btn btn-dark bookshelf_btn" data-book="{{ object.pk }}">Add to bookshelf</a>
+                {% endif %}
+                {% endif %}
+            </div>
+        </div>
+    </li>
     {% empty %}
-    <a href="#" class="list-group-item list-group-item-action disabled" tabindex="-1" aria-disabled="true">No book here</a>
+    <li class="media">
+        <div class="media-body">
+            <h5 class="mt-0 mb-1">No books here</h5>
+        </div>
+    </li>
     {% endfor %}
-</div>
+</ul>
+{% include 'partials/js/add_to_bookshelf.html' %}
 {% endblock %}

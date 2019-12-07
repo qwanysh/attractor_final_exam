@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth import logout, authenticate, login
 from django.shortcuts import redirect, render
 from django.views import View
@@ -23,6 +24,7 @@ class UserListView(ListView):
 class UserLogoutView(View):
     def get(self, request, *args, **kwargs):
         logout(request)
+        messages.add_message(self.request, messages.SUCCESS, 'Good bye!')
         return redirect(request.META.get('HTTP_REFERER'))
 
 
@@ -42,6 +44,7 @@ class UserLoginView(View):
         user = authenticate(request, username=username, password=password)
         if user:
             login(request, user)
+            messages.add_message(self.request, messages.SUCCESS, f'Welcome back, {username}!')
             return redirect('books:book_list')
         else:
             context['has_error'] = True
@@ -61,6 +64,7 @@ class UserRegisterView(View):
         if form.is_valid():
             user = form.save()
             login(request, user)
+            messages.add_message(self.request, messages.SUCCESS, f'Welcome!')
             return redirect('books:book_list')
         else:
             context = {

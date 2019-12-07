@@ -41,7 +41,8 @@ class Book(models.Model):
     author = models.ForeignKey(
         'books.Author',
         on_delete=models.PROTECT,
-        verbose_name='Author'
+        verbose_name='Author',
+        related_name='books'
     )
     name = models.CharField(
         max_length=100,

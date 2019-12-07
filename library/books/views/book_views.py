@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
 from django.views.generic import ListView, DetailView, CreateView, DeleteView
@@ -9,6 +10,17 @@ from ..forms import BookCreateForm
 class BookListView(ListView):
     model = Book
     template_name = 'book/list.html'
+
+    def get_context_data(self, **kwargs):
+        if self.request.user.is_authenticated:
+            kwargs['user_added_books'] = self.get_user_added_books
+        return super().get_context_data(**kwargs)
+
+    def get_user_added_books(self):
+        books = []
+        for bookshelf in self.request.user.bookshelfs.all():
+            books.append(bookshelf.book)
+        return books
 
 
 class BookDetailView(DetailView):
@@ -30,6 +42,7 @@ class BookCreateView(CreateView):
         return super().form_valid(form)
 
     def get_success_url(self):
+        messages.add_message(self.request, messages.SUCCESS, 'Book has been added')
         return reverse('books:book_list')
 
 
@@ -38,4 +51,5 @@ class BookDeleteView(DeleteView):
     template_name = 'book/delete.html'
 
     def get_success_url(self):
+        messages.add_message(self.request, messages.SUCCESS, 'Book has been deleted')
         return reverse('books:book_list')

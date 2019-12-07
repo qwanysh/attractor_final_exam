@@ -6,9 +6,36 @@
 {% endblock %}
 {% block content %}
 <div class="jumbotron jumbotron-fluid">
-  <div class="container">
-    <h1 class="display-4">{{ object.full_name }}</h1>
-<!--    <p class="lead">{{ object.name }}</p>-->
-  </div>
+    <div class="container">
+        <h1 class="display-4">{{ object.full_name }}</h1>
+        <!--    <p class="lead">{{ object.name }}</p>-->
+    </div>
 </div>
+<h2 class="mb-4">Books of this author</h2>
+<ul class="list-unstyled">
+    {% for book in object.books.all %}
+    <li class="media mb-2">
+        <!--        <img src="..." class="mr-3" alt="...">-->
+        <div class="media-body">
+            <h5 class="mt-0 mb-1"><a href="{% url 'books:book_detail' book.pk %}">{{ book.name }} ({{ book.year_of_publish }})</a></h5>
+            <div class="bookshelf-controls" id="bookshelf_controls-{{ book.pk }}">
+                {% if user.is_authenticated %}
+                {% if book in user_added_books %}
+                <a href="#" class="btn btn-danger bookshelf_btn" data-book="{{ book.pk }}">Remove from bookshelf</a>
+                {% else %}
+                <a href="#" class="btn btn-dark bookshelf_btn" data-book="{{ book.pk }}">Add to bookshelf</a>
+                {% endif %}
+                {% endif %}
+            </div>
+        </div>
+    </li>
+    {% empty %}
+    <li class="media">
+        <div class="media-body">
+            <h5 class="mt-0 mb-1">No books here</h5>
+        </div>
+    </li>
+    {% endfor %}
+</ul>
+{% include 'partials/js/add_to_bookshelf.html' %}
 {% endblock %}
