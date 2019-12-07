@@ -12,6 +12,5 @@ urlpatterns = [
     path('books/', BookListView.as_view(), name='book_list'),
     path('books/<int:pk>/', BookDetailView.as_view(), name='book_detail'),
     path('books/<int:pk>/delete/', BookDeleteView.as_view(), name='book_delete'),
-    path('books/<int:pk>/add_to_bookshelf/', BookshelfCreateView.as_view(), name='bookshelf_create'),
-    path('books/<int:pk>/remove_from_bookshelf/', BookshelfDeleteView.as_view(), name='bookshelf_delete'),
+    path('books/bookshelf/', BookshelfView.as_view(), name='bookshelf'),
 ]

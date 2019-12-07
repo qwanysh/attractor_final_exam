@@ -1,0 +1,43 @@
+<script>
+    document.querySelectorAll('.bookshelf_btn').forEach(function (btn) {
+        btn.addEventListener('click', () => bookshelfAjax(btn));
+    });
+
+    function bookshelfAjax(btn) {
+        const bookId = btn.dataset.book;
+        const url = '{% url 'books:bookshelf' %}';
+        const payload = {
+            book_pk: bookId,
+        };
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token }}',
+            },
+            body: JSON.stringify(payload)
+        }).then(function (response) {
+            if (response.ok)
+                return response.json();
+        }).then(function (response) {
+            btn.remove();
+            const button = document.createElement('a');
+            button.href = '#';
+            button.classList.add('btn');
+            button.classList.add('bookshelf_btn');
+            button.dataset.book = bookId;
+            if (response.result === 'deleted') {
+                button.classList.add('btn-dark');
+                button.innerText = 'Add to bookshelf';
+            }
+            else {
+                button.classList.add('btn-danger');
+                button.innerText = 'Remove from bookshelf';
+            }
+            document.getElementById('bookshelf_controls-' + bookId).appendChild(button);
+            button.addEventListener('click', () => bookshelfAjax(button));
+        }).catch(function (error) {
+            console.log(error);
+        });
+    }
+</script>
