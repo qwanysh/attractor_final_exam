@@ -82,7 +82,7 @@ class Book(models.Model):
         return self.name
 
 
-class AddedBook(models.Model):
+class Bookshelf(models.Model):
     book = models.ForeignKey(
         'books.Book',
         on_delete=models.CASCADE,
