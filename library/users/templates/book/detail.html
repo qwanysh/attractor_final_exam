@@ -17,6 +17,8 @@
     <div class="media-body">
       <h5 class="mt-0 mb-1">[<code>{{ review.created_at | date:'H:i d.m.Y' }}</code>]&nbsp;<a href="{% url 'users:detail' review.user.pk %}">{{ review.user.username }}</a></h5>
       {{ review.text }}
+      <br>
+      <a href="{% url 'books:review_delete' object.pk review.pk %}" class="btn btn-danger">Delete</a>
     </div>
   </li>
 </ul>
