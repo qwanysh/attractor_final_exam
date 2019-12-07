@@ -80,3 +80,25 @@ class Book(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class AddedBook(models.Model):
+    book = models.ForeignKey(
+        'books.Book',
+        on_delete=models.CASCADE,
+        null=False,
+        blank=False,
+        default=None,
+        verbose_name='Book'
+    )
+    user = models.ForeignKey(
+        'users.User',
+        on_delete=models.CASCADE,
+        null=False,
+        blank=False,
+        default=None,
+        verbose_name='User'
+    )
+
+    def __str__(self):
+        return f'{self.user.username} added {self.book.name}'
