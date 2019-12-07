@@ -8,3 +8,5 @@ class UserDetailView(DetailView):
     model = User
     template_name = 'user/detail.html'
 
+    def get_queryset(self):
+        return User.objects.all()
