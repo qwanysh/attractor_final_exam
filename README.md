@@ -1,4 +1,4 @@
-# django_instagram
+# attractor_final_exam
 
 Library application on Django Framework
 
