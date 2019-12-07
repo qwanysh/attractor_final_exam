@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Author, Book
+from .models import Author, Book, Review
 
 
 class AuthorCreateForm(forms.ModelForm):
@@ -72,3 +72,15 @@ class BookCreateForm(forms.ModelForm):
     class Meta:
         model = Book
         exclude = ['author']
+
+
+class ReviewCreateForm(forms.ModelForm):
+    text = forms.CharField(
+        widget=forms.TextInput(attrs={
+            'class': 'form-control'
+        })
+    )
+
+    class Meta:
+        model = Review
+        fields = ['text']

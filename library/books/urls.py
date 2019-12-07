@@ -14,5 +14,6 @@ urlpatterns = [
     path('books/<int:pk>/', BookDetailView.as_view(), name='book_detail'),
     path('books/<int:pk>/delete/', BookDeleteView.as_view(), name='book_delete'),
     path('books/bookshelf/', BookshelfView.as_view(), name='bookshelf'),
-    path('books/<int:book_pk>/reviews/<int:pk>/delete/', ReviewDeleteView.as_view(), name='review_delete')
+    path('books/<int:book_pk>/reviews/<int:pk>/delete/', ReviewDeleteView.as_view(), name='review_delete'),
+    path('books/<int:book_pk>/reviews/new/', ReviewCreateView.as_view(), name='review_create'),
 ]

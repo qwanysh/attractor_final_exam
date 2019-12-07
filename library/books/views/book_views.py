@@ -4,7 +4,7 @@ from django.urls import reverse
 from django.views.generic import ListView, DetailView, CreateView, DeleteView
 
 from ..models import Book, Author
-from ..forms import BookCreateForm
+from ..forms import BookCreateForm, ReviewCreateForm
 
 
 class BookListView(ListView):
@@ -26,6 +26,11 @@ class BookListView(ListView):
 class BookDetailView(DetailView):
     model = Book
     template_name = 'book/detail.html'
+
+    def get_context_data(self, **kwargs):
+        kwargs['form'] = ReviewCreateForm()
+        kwargs['reviews'] = self.object.reviews.all().order_by('-created_at')
+        return super().get_context_data(**kwargs)
 
 
 class BookCreateView(CreateView):
