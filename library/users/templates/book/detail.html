@@ -11,9 +11,12 @@
 {% block content %}
 <div class="jumbotron jumbotron-fluid">
   <div class="container">
+    {% if object.coverage %}
+    <img width="300px" src="{{ object.coverage.url }}">
+    {% endif %}
     <h1 class="display-4">{{ object.name }} ({{ object.year_of_publish }})</h1>
-        <p class="lead">Author: <a href="{% url 'books:author_detail' object.author.pk %}">{{ object.author.full_name }}</a></p>
-        <p class="lead">Description: {{ object.description }}</p>
+    <p class="lead">Author: <a href="{% url 'books:author_detail' object.author.pk %}">{{ object.author.full_name }}</a></p>
+    <p class="lead">Description: {{ object.description }}</p>
   </div>
 </div>
 <h2 class="mb-4">Reviews</h2>
