@@ -2,10 +2,10 @@ from django.contrib import messages
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
-from django.views.generic import ListView, DetailView, CreateView, DeleteView
+from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView
 
 from ..models import Book, Author
-from ..forms import BookCreateForm, ReviewCreateForm
+from ..forms import BookForm, ReviewCreateForm
 
 
 class BookListView(ListView):
@@ -37,7 +37,7 @@ class BookDetailView(DetailView):
 class BookCreateView(UserPassesTestMixin, CreateView):
     model = Book
     template_name = 'book/create.html'
-    form_class = BookCreateForm
+    form_class = BookForm
 
     def get_context_data(self, **kwargs):
         kwargs['author_pk'] = self.kwargs.get('pk')
@@ -49,7 +49,7 @@ class BookCreateView(UserPassesTestMixin, CreateView):
 
     def get_success_url(self):
         messages.add_message(self.request, messages.SUCCESS, 'Book has been added')
-        return reverse('books:book_list')
+        return reverse('books:book_detail', kwargs={'pk': self.object.pk})
 
     def test_func(self):
         return self.request.user.is_superuser
@@ -62,6 +62,19 @@ class BookDeleteView(UserPassesTestMixin, DeleteView):
     def get_success_url(self):
         messages.add_message(self.request, messages.SUCCESS, 'Book has been deleted')
         return reverse('books:book_list')
+
+    def test_func(self):
+        return self.request.user.is_superuser
+
+
+class BookEditView(UserPassesTestMixin, UpdateView):
+    model = Book
+    template_name = 'book/edit.html'
+    form_class = BookForm
+
+    def get_success_url(self):
+        messages.add_message(self.request, messages.SUCCESS, 'Book has been edited')
+        return reverse('books:book_detail', kwargs={'pk': self.kwargs.get('pk')})
 
     def test_func(self):
         return self.request.user.is_superuser

@@ -39,7 +39,7 @@ class AuthorForm(forms.ModelForm):
         exclude = []
 
 
-class BookCreateForm(forms.ModelForm):
+class BookForm(forms.ModelForm):
     name = forms.CharField(
         widget=forms.TextInput(attrs={
             'class': 'form-control'
