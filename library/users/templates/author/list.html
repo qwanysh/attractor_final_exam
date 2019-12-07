@@ -1,8 +1,9 @@
 {% extends 'base.html' %}
+{% block heading %}Authors{% endblock %}
 {% block content %}
 <div class="list-group">
     {% for object in object_list %}
-    <a href="#" class="list-group-item list-group-item-action">object.full_name</a>
+    <a href="#" class="list-group-item list-group-item-action">{{ object.full_name }}</a>
     {% empty %}
     <a href="#" class="list-group-item list-group-item-action disabled" tabindex="-1" aria-disabled="true">No author here</a>
     {% endfor %}
