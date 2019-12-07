@@ -4,6 +4,9 @@
 {% if user.is_superuser %}
 <a href="{% url 'books:book_delete' object.pk %}" class="btn btn-danger">Delete</a>
 {% endif %}
+{% if object.file %}
+<a href="{{ object.file.url }}" class="btn btn-dark" download="">Download</a>
+{% endif %}
 {% endblock %}
 {% block content %}
 <div class="jumbotron jumbotron-fluid">
