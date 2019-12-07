@@ -1,9 +1,7 @@
 {% extends 'base.html' %}
 {% block heading %}Authors{% endblock %}
 {% block controls %}
-<button type="button" class="btn btn-dark" data-toggle="modal" data-target="#exampleModalCenter">
-    Add new author
-</button>
+<a href="{% url 'books:author_create' %}" class="btn btn-dark">Add author</a>
 {% endblock %}
 {% block content %}
 <div class="list-group">

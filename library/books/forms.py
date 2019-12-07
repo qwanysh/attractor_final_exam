@@ -9,22 +9,26 @@ class AuthorCreateForm(forms.ModelForm):
             'class': 'form-control'
         })
     )
-    date_of_birth = forms.CharField(
-        widget=forms.TextInput(attrs={
+    date_of_birth = forms.DateField(
+        required=False,
+        widget=forms.DateInput(attrs={
             'class': 'form-control'
         })
     )
-    date_of_death = forms.CharField(
-        widget=forms.TextInput(attrs={
+    date_of_death = forms.DateField(
+        required=False,
+        widget=forms.DateInput(attrs={
             'class': 'form-control'
         })
     )
     biography = forms.CharField(
+        required=False,
         widget=forms.Textarea(attrs={
             'class': 'form-control'
         })
     )
     image = forms.ImageField(
+        required=False,
         widget=forms.FileInput(attrs={
             'class': 'form-control'
         })

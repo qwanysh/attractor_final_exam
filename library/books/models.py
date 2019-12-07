@@ -12,13 +12,11 @@ class Author(models.Model):
     date_of_birth = models.DateField(
         null=True,
         blank=True,
-        default=None,
         verbose_name='Date of birth'
     )
     date_of_death = models.DateField(
         null=True,
         blank=True,
-        default=None,
         verbose_name='Date of death'
     )
     biography = models.TextField(
