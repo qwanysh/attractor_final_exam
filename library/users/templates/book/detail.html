@@ -7,7 +7,24 @@
 <div class="jumbotron jumbotron-fluid">
   <div class="container">
     <h1 class="display-4">{{ object.name }}</h1>
-<!--    <p class="lead">{{ object.name }}</p>-->
+    <!--    <p class="lead">{{ object.name }}</p>-->
   </div>
 </div>
+<h2 class="mb-4">Reviews</h2>
+{% for review in object.reviews.all %}
+<ul class="list-unstyled">
+  <li class="media">
+    <div class="media-body">
+      <h5 class="mt-0 mb-1">[<code>{{ review.created_at | date:'H:i d.m.Y' }}</code>]&nbsp;<a href="{% url 'users:detail' review.user.pk %}">{{ review.user.username }}</a></h5>
+      {{ review.text }}
+    </div>
+  </li>
+</ul>
+{% empty %}
+<li class="media">
+  <div class="media-body">
+    <h5 class="mt-0 mb-1">No reviews here</h5>
+  </div>
+</li>
+{% endfor %}
 {% endblock %}
