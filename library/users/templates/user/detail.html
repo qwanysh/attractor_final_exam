@@ -8,12 +8,26 @@
 </div>
 <h2 class="mb-4">Added books</h2>
 <ul class="list-unstyled">
+    {% for bookshelf in object.bookshelfs.all %}
     <li class="media">
-<!--        <img src="..." class="mr-3" alt="...">-->
+        <!--        <img src="..." class="mr-3" alt="...">-->
         <div class="media-body">
-            <h5 class="mt-0 mb-1">List-based media object</h5>
-            Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+            <h5 class="mt-0 mb-1">{{ bookshelf.book.name }}</h5>
+            {% if user.is_authenticated %}
+            {% if bookshelf in user.bookshelfs.all %}
+            <a href="#" class="btn btn-danger">Remove from bookshelf</a>
+            {% else %}
+            <a href="#" class="btn btn-dark">Add to bookshelf</a>
+            {% endif %}
+            {% endif %}
         </div>
     </li>
+    {% empty %}
+    <li class="media">
+        <div class="media-body">
+            <h5 class="mt-0 mb-1">No books added</h5>
+        </div>
+    </li>
+    {% endfor %}
 </ul>
 {% endblock %}

@@ -9,6 +9,7 @@ from .forms import UserLoginForm, UserRegisterForm
 class UserDetailView(DetailView):
     model = User
     template_name = 'user/detail.html'
+    context_object_name = 'object'
 
     def get_queryset(self):
         return User.objects.all()

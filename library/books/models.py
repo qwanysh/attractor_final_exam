@@ -89,7 +89,8 @@ class Bookshelf(models.Model):
         null=False,
         blank=False,
         default=None,
-        verbose_name='Book'
+        verbose_name='Book',
+        related_name='bookshelfs'
     )
     user = models.ForeignKey(
         'users.User',
@@ -97,7 +98,8 @@ class Bookshelf(models.Model):
         null=False,
         blank=False,
         default=None,
-        verbose_name='User'
+        verbose_name='User',
+        related_name='bookshelfs'
     )
 
     def __str__(self):
