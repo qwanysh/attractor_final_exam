@@ -1,5 +1,5 @@
 from django.urls import reverse
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import ListView, DetailView, CreateView, DeleteView
 
 from ..models import Author
 from ..forms import AuthorCreateForm
@@ -23,6 +23,14 @@ class AuthorCreateView(CreateView):
     model = Author
     template_name = 'author/create.html'
     form_class = AuthorCreateForm
+
+    def get_success_url(self):
+        return reverse('books:author_list')
+
+
+class AuthorDeleteView(DeleteView):
+    model = Author
+    template_name = 'author/delete.html'
 
     def get_success_url(self):
         return reverse('books:author_list')
