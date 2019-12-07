@@ -105,3 +105,29 @@ class Bookshelf(models.Model):
 
     def __str__(self):
         return f'{self.user.username} added {self.book.name}'
+
+
+class Review(models.Model):
+    user = models.ForeignKey(
+        'users.User',
+        on_delete=models.CASCADE,
+        related_name='reviews',
+        null=False,
+        blank=False,
+        default=None,
+        verbose_name='User'
+    )
+    text = models.TextField(
+        max_length=500,
+        null=False,
+        blank=False,
+        default=None,
+        verbose_name='Text'
+    )
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+        verbose_name='Created at'
+    )
+
+    def __str__(self):
+        return f'{self.user.username} - {self.text[:20]}'
