@@ -9,6 +9,9 @@
 {% block content %}
 <div class="jumbotron jumbotron-fluid">
     <div class="container">
+        {% if object.image %}
+        <img width="300px" src="{{ object.image.url }}">
+        {% endif %}
         <h1 class="display-4">{{ object.full_name }}</h1>
         <p class="lead">Date of birth: {{ object.date_of_birth }}</p>
         <p class="lead">Date of death: {{ object.date_of_birth }}</p>
