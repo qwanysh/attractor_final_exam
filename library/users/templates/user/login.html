@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block heading %}Login{% endblock %}
+{% block content %}
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <form action="{% url 'users:login' %}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% include 'partials/_form.html' %}
+            <button type="submit" class="btn btn-dark">Submit</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
